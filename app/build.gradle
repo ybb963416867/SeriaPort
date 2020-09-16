@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+
+//apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = '963416867'   //注册时候的用户名
+    groupId = 'com.yang'//   //compile引用时的第1部分
+    artifactId = 'libSerialPortLib'////发布到JCenter上的项目名字，compile引用时的第2部分项目名
+    uploadName = 'libSerialPortLib'//为上传后，在bintray显示的名字。
+    publishVersion = '1.0.1'//版本号 ，compile引用时的最后部分，下次更新是只需要更改版本号即可
+    desc = '串口通讯底层封装'//描述，不重要
+    //website = 'https://github.com/ybb963416867/NiceDialog-master-master'  //项目的GitHub网站
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.example.seriaport"
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(path: ':serialport')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+}
